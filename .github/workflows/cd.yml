@@ -7,9 +7,6 @@ on:
 
 jobs:
   build-and-deploy-image:
-    defaults:
-      run:
-        working-directory: ./devops_api
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,5 +19,5 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t mhouney/devops_quotes_api:latest .
-          docker push mhouney/devops_quotes_api:latest
+          docker build -t mhouney/quote_magician_devops_api:latest .
+          docker push mhouney/quote_magician_devops_api:latest

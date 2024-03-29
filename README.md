@@ -1,3 +1,3 @@
-[![codecov](https://codecov.io/gh/MhouneyLH/quote_magician/graph/badge.svg?token=QC7DFVJW6E)](https://codecov.io/gh/MhouneyLH/quote_magician)
+[![codecov](https://codecov.io/gh/QuoteMagician/quote_magician_devops_api/graph/badge.svg?token=X7ZONHQND9)](https://codecov.io/gh/QuoteMagician/quote_magician_devops_api)
 
 https://paulallies.medium.com/clean-architecture-typescript-express-api-b90846794998

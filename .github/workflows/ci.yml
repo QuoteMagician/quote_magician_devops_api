@@ -9,9 +9,6 @@ on:
 
 jobs:
   build-and-test:
-    defaults:
-      run:
-        working-directory: ./devops_api
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -31,4 +28,4 @@ jobs:
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: MhouneyLH/quote_magician
+          slug: QuoteMagician/quote_magician_devops_api
