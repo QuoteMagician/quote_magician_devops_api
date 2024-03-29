@@ -1,0 +1,33 @@
+{
+  "name": "devops_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:unit": "jest unit_tests --collectCoverage",
+    "test:integration": "jest integration_tests --watchAll --collectCoverage",
+    "dev:build": "rm -rf build && tsc",
+    "dev:serve": "ts-node src/main.ts",
+    "dev:start": "npm run dev:build && npm run dev:serve"
+  },
+  "homepage": "https://github.com/MhouneyLH/quote_magician",
+  "author": "Lucas Hünniger",
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongodb": "^6.5.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.30",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  }
+}
