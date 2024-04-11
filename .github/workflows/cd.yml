@@ -35,4 +35,9 @@ jobs:
 
       - name: Deploy to AWS EC2
         run: |
+          echo "${{ secrets.SSH_KEY }}" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-208-92-246.compute-1.amazonaws.com '
+
+          cd ~/
+          touch testfile.txt
           
