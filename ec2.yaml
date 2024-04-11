@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: "2024-04-11"
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-051f8a213df8bc089
+      # use `aws ec2 describe-security-groups` to get the security group ID
+      SecurityGroups: sg-0424bbdcfad2c8d6c
+      InstanceType: t2.micro # Choose an appropriate instance type (e.g., t2.micro)
+      # UserData: IyFiaW4vYmFzaAoKIyBVcGRhdGUgcGFja2FnZSBsaXN0cwpzdWRvIHl1bSB1cGRhdGUgLXkKCiMgSW5zdGFsbCBEb2NrZXIKc3VkbyBhbWF6b24tbGludXgtZXh0cmFzIGluc3RhbGwgZG9ja2VyIC15CnN1ZG8gc2VydmljZSBkb2NrZXIgc3RhcnQKCiMgT3BlbiBuZWNlc3NhcnkgcG9ydHMKIyBmcm9udGVuZApzdWRvIGZpcmV3YWxsLWNtZCAtLXBlcm1hbmVudCAtLWFkZC1wb3J0IDgwL3RjcAojIGJhY2tlbmQKc3VkbyBmaXJld2FsbC1jbWQgLS1wZXJtYW5lbnQgLS1hZGQtcG9ydCA0MDAwL3RjcApzdWRvIGZpcmV3YWxsLWNtZCAtLXJlbG9hZAoKIyBFbmFibGUgRG9ja2VyIG9uIGJvb3QKc3VkbyBzeXN0ZW1jdGwgZW5hYmxlIGRvY2tlcg==%
+
+Outputs:
+  InstanceId:
+    Description: Instance ID of the created EC2 instance
+    Value: !Ref MyInstance
