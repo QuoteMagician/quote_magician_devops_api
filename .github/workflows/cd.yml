@@ -22,8 +22,8 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ DOCKER_IMAGE_NAME }} .
-          docker push ${{ DOCKER_IMAGE_NAME }}
+          docker build -t mhouney/quote_magician_devops_api:latest .
+          docker push mhouney/quote_magician_devops_api:latest
   deploy-to-aws-ec2:
     runs-on: ubuntu-latest
     needs: build-and-deploy-image
