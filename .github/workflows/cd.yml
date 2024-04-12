@@ -8,8 +8,6 @@ on:
 env:
   DOCKER_IMAGE_NAME: mhouney/quote_magician_devops_api:latest
   PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
 jobs:
   build-and-deploy-image:
@@ -37,13 +35,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Deploy to AWS EC2
+        # env:
+        #   MONGODB_ATLAS_USERNAME: ${{ secrets.MONGODB_ATLAS_USERNAME }}
+        #   MONGODB_ATLAS_PASSWORD: ${{ secrets.MONGODB_ATLAS_PASSWORD }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          # ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-237-185-133.compute-1.amazonaws.com 'sudo docker login -u DOCKER_USERNAME -p DOCKER_PASSWORD'
           ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-237-185-133.compute-1.amazonaws.com 'sudo docker pull mhouney/quote_magician_devops_api:latest'
-          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-237-185-133.compute-1.amazonaws.com 'sudo docker run -p 4000:4000 -d --rm --name api-container mhouney/quote_magician_devops_api:latest'
-
-
-       
-
-          
+          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-237-185-133.compute-1.amazonaws.com 'sudo docker run -p 4000:4000 -d -e MONGODB_ATLAS_USERNAME=${{ secrets.MONGODB_ATLAS_USERNAME }} -e MONGODB_ATLAS_PASSWORD=${{ secrets.MONGODB_ATLAS_PASSWORD }} --name api-container mhouney/quote_magician_devops_api:latest'
