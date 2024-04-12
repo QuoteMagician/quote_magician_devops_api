@@ -34,7 +34,8 @@ jobs:
       - name: Deploy to AWS EC2
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-237-185-133.compute-1.amazonaws.com 'docker pull --username DOCKER_USERNAME --password DOCKER_PASSWORD mhouney/quote_magician_devops_api:latest'
+          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-237-185-133.compute-1.amazonaws.com 'docker login -u DOCKER_USERNAME -p DOCKER_PASSWORD'
+          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-237-185-133.compute-1.amazonaws.com 'docker pull mhouney/quote_magician_devops_api:latest'
           sh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-237-185-133.compute-1.amazonaws.com 'docker run -p 4000:4000 -d --rm --name api-container mhouney/quote_magician_devops_api:latest'
 
 
