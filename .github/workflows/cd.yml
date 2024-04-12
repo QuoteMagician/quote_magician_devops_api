@@ -7,6 +7,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: mhouney/quote_magician_devops_api:latest
+  PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
 jobs:
   build-and-deploy-image:
@@ -35,8 +36,8 @@ jobs:
 
       - name: Deploy to AWS EC2
         run: |
-          echo "${{ secrets.SSH_KEY }}" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-208-92-246.compute-1.amazonaws.com '
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-54-237-185-133.compute-1.amazonaws.com
 
           cd ~/
           touch testfile.txt
