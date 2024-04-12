@@ -18,6 +18,7 @@ Resources:
           sudo service docker start
           # Enable Docker on boot
           sudo systemctl enable docker
+          sudo docker create network app_network
       Tags:
         - Key: Name
           Value: DevOpsTest
