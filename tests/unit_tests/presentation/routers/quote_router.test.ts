@@ -2,6 +2,7 @@ import { Quote } from "../../../../src/domain/entities/quote_entity";
 import { CreateQuoteUseCase } from "../../../../src/domain/interfaces/usecases/quote/create_quote";
 import { DeleteQuoteUseCase } from "../../../../src/domain/interfaces/usecases/quote/delete_quote";
 import { GetAllQuotesUseCase } from "../../../../src/domain/interfaces/usecases/quote/get_all_quotes";
+import { GetDailyQuoteUseCase } from "../../../../src/domain/interfaces/usecases/quote/get_daily_quote";
 import { GetQuoteByIdUseCase } from "../../../../src/domain/interfaces/usecases/quote/get_quote_by_id";
 import { UpdateQuoteUseCase } from "../../../../src/domain/interfaces/usecases/quote/update_quote";
 import QuoteRouter from "../../../../src/presentation/routers/quote_router";
@@ -15,6 +16,12 @@ class MockCreateQuoteUseCase implements CreateQuoteUseCase {
 }
 
 class MockGetQuoteByIdUseCase implements GetQuoteByIdUseCase {
+  execute(): Promise<Quote> {
+    throw new Error("Method not implemented.");
+  }
+}
+
+class MockGetDailyQuoteUseCase implements GetDailyQuoteUseCase {
   execute(): Promise<Quote> {
     throw new Error("Method not implemented.");
   }
@@ -41,6 +48,7 @@ class MockDeleteQuoteUseCase implements DeleteQuoteUseCase {
 describe("QuoteRouter", () => {
   let createQuoteUseCase: CreateQuoteUseCase;
   let getQuoteByIdUseCase: GetQuoteByIdUseCase;
+  let getDailyQuoteUsecase: GetDailyQuoteUseCase;
   let getAllQuotesUseCase: GetAllQuotesUseCase;
   let updateQuoteUseCase: UpdateQuoteUseCase;
   let deleteQuoteUseCase: DeleteQuoteUseCase;
@@ -48,6 +56,7 @@ describe("QuoteRouter", () => {
   beforeAll(() => {
     createQuoteUseCase = new MockCreateQuoteUseCase();
     getQuoteByIdUseCase = new MockGetQuoteByIdUseCase();
+    getDailyQuoteUsecase = new MockGetDailyQuoteUseCase();
     getAllQuotesUseCase = new MockGetAllQuotesUseCase();
     updateQuoteUseCase = new MockUpdateQuoteUseCase();
     deleteQuoteUseCase = new MockDeleteQuoteUseCase();
@@ -56,6 +65,7 @@ describe("QuoteRouter", () => {
       QuoteRouter(
         createQuoteUseCase,
         getQuoteByIdUseCase,
+        getDailyQuoteUsecase,
         getAllQuotesUseCase,
         updateQuoteUseCase,
         deleteQuoteUseCase
@@ -119,6 +129,34 @@ describe("QuoteRouter", () => {
 
       expect(response.status).toBe(500);
       expect(getQuoteByIdUseCase.execute).toHaveBeenCalledTimes(1);
+      expect(response.body).toHaveProperty("message");
+    });
+  });
+
+  describe("GET /quotes/daily", () => {
+    test("should return 200 with data when daily quote is found", async () => {
+      const expected = {
+        id: "1",
+        text: "test",
+        author: "test",
+        likeCount: 1,
+      };
+      jest.spyOn(getDailyQuoteUsecase, "execute").mockResolvedValue(expected);
+
+      const response = await request(server).get("/quotes/daily");
+
+      expect(response.status).toBe(200);
+      expect(getDailyQuoteUsecase.execute).toHaveBeenCalledTimes(1);
+      expect(response.body).toEqual(expected);
+    });
+
+    test("should return 500 with error message when daily quote is not found", async () => {
+      jest.spyOn(getDailyQuoteUsecase, "execute").mockImplementation(() => Promise.reject(Error()));
+
+      const response = await request(server).get("/quotes/daily");
+
+      expect(response.status).toBe(500);
+      expect(getDailyQuoteUsecase.execute).toHaveBeenCalledTimes(1);
       expect(response.body).toHaveProperty("message");
     });
   });

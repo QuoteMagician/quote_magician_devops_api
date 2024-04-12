@@ -12,6 +12,7 @@ import { GetAllQuotes } from "./domain/usecases/quote/get_all_quotes";
 import { UpdateQuote } from "./domain/usecases/quote/update_quote";
 import { DeleteQuote } from "./domain/usecases/quote/delete_quote";
 import server from "./server";
+import { GetDailyQuote } from "./domain/usecases/quote/get_daily_quote";
 
 dotenv.config();
 
@@ -62,6 +63,7 @@ async function run() {
     const quoteRouter = QuoteRouter(
       new CreateQuote(quoteRepository),
       new GetQuoteById(quoteRepository),
+      new GetDailyQuote(quoteRepository, new Date()),
       new GetAllQuotes(quoteRepository),
       new UpdateQuote(quoteRepository),
       new DeleteQuote(quoteRepository)
