@@ -40,4 +40,4 @@ jobs:
           PRIVATE_KEY_FILE="private_key"
           echo "$PRIVATE_KEY" > $PRIVATE_KEY_FILE && chmod 600 $PRIVATE_KEY_FILE
           ssh -o StrictHostKeyChecking=no -i $PRIVATE_KEY_FILE ubuntu@${{ secrets.EC2_PUBLIC_IP_ADDRESS }} 'sudo docker pull ${{ env.DOCKER_IMAGE_NAME }}'
-          ssh -o StrictHostKeyChecking=no -i $PRIVATE_KEY_FILE ubuntu@${{ secrets.EC2_PUBLIC_IP_ADDRESS }} 'sudo docker run -p 4000:4000 -d --rm -e MONGODB_ATLAS_USERNAME=${{ secrets.MONGODB_ATLAS_USERNAME }} -e MONGODB_ATLAS_PASSWORD=${{ secrets.MONGODB_ATLAS_PASSWORD }} --name api-container ${{ env.DOCKER_IMAGE_NAME }}'
+          ssh -o StrictHostKeyChecking=no -i $PRIVATE_KEY_FILE ubuntu@${{ secrets.EC2_PUBLIC_IP_ADDRESS }} 'sudo docker run -p 4000:4000 -d --rm -e MONGODB_ATLAS_USERNAME=${{ secrets.MONGODB_ATLAS_USERNAME }} -e MONGODB_ATLAS_PASSWORD=${{ secrets.MONGODB_ATLAS_PASSWORD }} --name api ${{ env.DOCKER_IMAGE_NAME }}'
