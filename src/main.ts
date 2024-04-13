@@ -14,6 +14,7 @@ import { DeleteQuote } from "./domain/usecases/quote/delete_quote";
 import server from "./server";
 import { GetDailyQuote } from "./domain/usecases/quote/get_daily_quote";
 import HealthRouter from "./presentation/routers/health_router";
+import { Logger } from "./utils/logger";
 
 dotenv.config();
 
@@ -64,7 +65,7 @@ async function run() {
     const quoteRouter = QuoteRouter(
       new CreateQuote(quoteRepository),
       new GetQuoteById(quoteRepository),
-      new GetDailyQuote(quoteRepository, new Date()),
+      new GetDailyQuote(quoteRepository),
       new GetAllQuotes(quoteRepository),
       new UpdateQuote(quoteRepository),
       new DeleteQuote(quoteRepository)

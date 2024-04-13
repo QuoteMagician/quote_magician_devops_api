@@ -4,7 +4,7 @@ import { GetDailyQuoteUseCase } from "../../interfaces/usecases/quote/get_daily_
 import crypto from "crypto";
 
 export class GetDailyQuote implements GetDailyQuoteUseCase {
-  constructor(private quoteRepository: QuoteRepository, private date: Date) {}
+  constructor(private quoteRepository: QuoteRepository) {}
 
   async execute(): Promise<Quote> {
     const allQuotes: Quote[] = await this.quoteRepository.getAll();
@@ -15,7 +15,7 @@ export class GetDailyQuote implements GetDailyQuoteUseCase {
 
   private getDailyRandomNumber(maxId: number): number {
     // Get the current date in the 'YYYY-MM-DD' format
-    const currentDate = this.date.toISOString().split("T")[0];
+    const currentDate = new Date().toISOString().split("T")[0];
 
     const secretKey = "lucasDanny";
     const seed = crypto.createHmac("sha256", secretKey).update(currentDate).digest("hex");

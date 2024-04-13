@@ -26,10 +26,10 @@ export default function QuoteRouter(
     }
   });
 
-  router.get("/:id", async (req: Request, res: Response) => {
+  router.get("/", async (req: Request, res: Response) => {
     try {
-      const quote = await getQuoteByIdUseCase.execute(req.params.id);
-      res.status(200).send(quote);
+      const quotes = await getAllQuotesUseCase.execute();
+      res.status(200).send(quotes);
     } catch (error: any) {
       res.status(500).send({ message: error.message });
     }
@@ -44,10 +44,10 @@ export default function QuoteRouter(
     }
   });
 
-  router.get("/", async (req: Request, res: Response) => {
+  router.get("/:id", async (req: Request, res: Response) => {
     try {
-      const quotes = await getAllQuotesUseCase.execute();
-      res.status(200).send(quotes);
+      const quote = await getQuoteByIdUseCase.execute(req.params.id);
+      res.status(200).send(quote);
     } catch (error: any) {
       res.status(500).send({ message: error.message });
     }

@@ -1,7 +1,5 @@
 FROM node:21-alpine as build
 
-RUN apk add --no-cache curl
-
 WORKDIR /app
 
 COPY package.json ./
@@ -14,6 +12,8 @@ RUN npm run dev:build
 
 
 FROM node:21-alpine as deploy
+
+RUN apk add --no-cache curl
 
 WORKDIR /app
 

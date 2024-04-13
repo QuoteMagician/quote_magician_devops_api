@@ -28,12 +28,10 @@ describe("Get Daily Quote Usecase", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     quoteRepository = new MockQuoteRepository();
-    usecase = new GetDailyQuote(quoteRepository, new Date());
+    usecase = new GetDailyQuote(quoteRepository);
   });
 
   test("should get a daily quote", async () => {
-    usecase = new GetDailyQuote(quoteRepository, new Date());
-
     const quotes: Quote[] = [
       { id: "1", text: "test", author: "test", likeCount: 1 },
       { id: "2", text: "test", author: "test", likeCount: 1 },
