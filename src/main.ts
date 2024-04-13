@@ -13,6 +13,7 @@ import { UpdateQuote } from "./domain/usecases/quote/update_quote";
 import { DeleteQuote } from "./domain/usecases/quote/delete_quote";
 import server from "./server";
 import { GetDailyQuote } from "./domain/usecases/quote/get_daily_quote";
+import HealthRouter from "./presentation/routers/health_router";
 
 dotenv.config();
 
@@ -38,8 +39,8 @@ async function run() {
   try {
     await mongodbClient.connect();
     const mongodbQuotesDB = await mongodbClient.db(quotesDatabaseName);
-    await mongodbQuotesDB.command({ ping: 1 });
     console.log("Connected to MongoDB!");
+
     const quotesCollection = await mongodbQuotesDB.collection(quotesCollectionName);
     console.log(`Connected to collection: ${quotesCollectionName}`);
 
@@ -69,7 +70,11 @@ async function run() {
       new DeleteQuote(quoteRepository)
     );
 
+    const healthRouter = HealthRouter(mongodbQuotesDB);
+
     server.use("/quotes", quoteRouter);
+    server.use("/health", healthRouter);
+
     server.listen(serverPort, () => {
       console.log(`Server is running on port ${serverPort}`);
     });
