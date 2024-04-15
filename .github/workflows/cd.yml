@@ -2,8 +2,11 @@ name: Continuous Deployment for the DevOps Quotes API
 
 on:
   workflow_dispatch:
-  push:
+  workflow_run:
+    workflows: ["Continuous Integration for the DevOps Quotes API"]
     branches: [master]
+    types:
+      - completed
 
 env:
   DOCKER_IMAGE_NAME: mhouney/quote_magician_devops_api:latest
