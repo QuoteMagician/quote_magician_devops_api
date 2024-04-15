@@ -6,6 +6,7 @@ import { GetAllQuotesUseCase } from "../../domain/interfaces/usecases/quote/get_
 import { GetQuoteByIdUseCase } from "../../domain/interfaces/usecases/quote/get_quote_by_id";
 import { UpdateQuoteUseCase } from "../../domain/interfaces/usecases/quote/update_quote";
 import { GetDailyQuoteUseCase } from "../../domain/interfaces/usecases/quote/get_daily_quote";
+import { Logger } from "../../utils/logger";
 
 export default function QuoteRouter(
   createQuoteUseCase: CreateQuoteUseCase,
@@ -38,6 +39,11 @@ export default function QuoteRouter(
   router.get("/daily", async (req: Request, res: Response) => {
     try {
       const quote = await getDailyQuoteUsecase.execute();
+      if (quote === undefined) {
+        Logger.log("No daily quote available");
+        res.status(404).send({ message: "No daily quote available" });
+      }
+
       res.status(200).send(quote);
     } catch (error: any) {
       res.status(500).send({ message: error.message });
